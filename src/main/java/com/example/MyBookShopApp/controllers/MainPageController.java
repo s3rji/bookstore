@@ -23,7 +23,7 @@ public class MainPageController {
         this.bookService = bookService;
     }
 
-    @ModelAttribute("recommendedBooks")
+    @ModelAttribute("listBooks")
     public List<Book> recommendedBooks(){
         return bookService.getBooksData();
     }
