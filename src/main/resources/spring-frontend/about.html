@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{company.head.title}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -22,8 +22,8 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs"
-                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category='О компании')}"></ul>
-            <h1 class="Middle-title">О компании
+                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=#{company.middle.title})}"></ul>
+            <h1 class="Middle-title" th:text="#{company.middle.title}">О компании
             </h1>
             <article class="Article">
                 <div class="sdf">

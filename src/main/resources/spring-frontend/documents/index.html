@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{documents.head.title}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -22,7 +22,7 @@
 <div class="Middle">
     <div class="wrap">
         <main class="Middle-main">
-            <h1 class="Middle-title">Документы
+            <h1 class="Middle-title" th:text="#{documents.middle.title}">Документы
             </h1>
             <div class="Section">
                 <div class="Documents">
@@ -30,7 +30,7 @@
                         <div class="Documents-image"><img src="/assets/img/content/documents/1.jpg" alt="1.jpg"/>
                         </div>
                         <div class="Documents-content">
-                            <strong class="Documents-title">Публичная оферта
+                            <strong class="Documents-title" th:text="#{documents.offer}">Публичная оферта
                             </strong>
                             <p>Согласно закону, публичная оферта – это предложение, которое, во-первых, адресовано
                                 неопределенному кругу лиц, во-вторых, содержит все существенные условия договора, и,
@@ -47,7 +47,7 @@
                         <div class="Documents-image"><img src="/assets/img/content/documents/2.jpg" alt="2.jpg"/>
                         </div>
                         <div class="Documents-content">
-                            <strong class="Documents-title">Политика обработки персональных данных
+                            <strong class="Documents-title" th:text="#{documents.policy}">Политика обработки персональных данных
                             </strong>
                             <p>Согласно закону, публичная оферта – это предложение, которое, во-первых, адресовано
                                 неопределенному кругу лиц, во-вторых, содержит все существенные условия договора, и,

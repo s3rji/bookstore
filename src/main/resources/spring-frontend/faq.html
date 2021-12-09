@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{faq.head.title}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -23,15 +23,15 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs"
-                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category='Помощь')}"></ul>
-            <h1 class="Middle-title">Помощь
+                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=#{faq.middle.title})}"></ul>
+            <h1 class="Middle-title" th:text="#{faq.middle.title}">Помощь
             </h1>
             <div class="FAQ">
-                <strong class="FAQ-title">Наиболее частые вопросы:
+                <strong class="FAQ-title" th:text="#{faq.label.questions}">Наиболее частые вопросы:
                 </strong>
                 <div class="HideBlock FAQ-block">
                     <header class="HideBlock-header HideBlock-trigger">
-                        <strong class="HideBlock-title">Что делать, если я не нашел нужный товар
+                        <strong class="HideBlock-title" th:text="#{faq.question.one}">Что делать, если я не нашел нужный товар
                         </strong>
                         <button class="HideBlock-btn" type="button">
                         </button>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="HideBlock FAQ-block">
                     <header class="HideBlock-header HideBlock-trigger">
-                        <strong class="HideBlock-title">Товара нет в наличии
+                        <strong class="HideBlock-title" th:text="#{faq.question.two}">Товара нет в наличии
                         </strong>
                         <button class="HideBlock-btn" type="button">
                         </button>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="HideBlock FAQ-block">
                     <header class="HideBlock-header HideBlock-trigger">
-                        <strong class="HideBlock-title">У товара слишком высокая цена
+                        <strong class="HideBlock-title" th:text="#{faq.question.three}">У товара слишком высокая цена
                         </strong>
                         <button class="HideBlock-btn" type="button">
                         </button>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="HideBlock FAQ-block">
                     <header class="HideBlock-header HideBlock-trigger">
-                        <strong class="HideBlock-title">У меня есть вопрос про товар продавца
+                        <strong class="HideBlock-title" th:text="#{faq.question.four}">У меня есть вопрос про товар продавца
                         </strong>
                         <button class="HideBlock-btn" type="button">
                         </button>
@@ -87,8 +87,8 @@
                     </div>
                 </div>
                 <div class="FAQ-footer">
-                    <p class="FAQ-link">Или&#32;<a href="/contacts.html">свяжитесь с нами</a>
-                    </p>
+                    <p class="FAQ-link" th:text="#{faq.label.or}">Или&#32;</p>
+                    <a href="/contacts.html" th:text="#{faq.label.contacts}">свяжитесь с нами</a>
                 </div>
             </div>
         </main>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{popular.head.title}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -23,10 +23,10 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs"
-                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category='Популярное')}"></ul>
+                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=#{popular.middle.title})}"></ul>
             <div class="Section">
                 <div class="Section-header">
-                    <h1 class="Section-title">Популярное
+                    <h1 class="Section-title" th:text="#{popular.middle.title}">Популярное
                     </h1>
                 </div>
                 <div class="Cards Cards_refresh"

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Тут название страницы написать</title>
+    <title th:text="#{search.head.title}">Тут название страницы написать</title>
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
@@ -21,21 +21,21 @@
 <div class="Middle Middle_search">
     <div class="wrap">
         <main class="Middle-main">
-            <h1 class="Middle-title">Поиск
+            <h1 class="Middle-title" th:text="#{search.middle.title}">Поиск
             </h1>
             <div class="Section">
                 <div class="search">
                     <form class="form form_search" action="#" method="post" data-searchlimit="20">
                         <input class="search-input" id="querypage" name="querypage" type="text"
                                placeholder="Search over 30 million book titles" value="Техника"/>
-                        <button class="search-button" type="submit" name="searchpage" id="searchpage">Поиск
+                        <button class="search-button" type="submit" name="searchpage" id="searchpage" th:text="#{search.button}">Поиск
                         </button>
                     </form>
                 </div>
             </div>
             <div class="Section Section_close">
                 <header class="Section-header">
-                    <h2 class="Section-title Middle-searchHeader">Найдено 40 книг
+                    <h2 class="Section-title Middle-searchHeader" th:text="#{search.result('40')}">Найдено 40 книг
                     </h2>
                 </header>
                 <div class="Cards Cards_refresh"
