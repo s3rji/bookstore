@@ -24,7 +24,7 @@ public class AuthorController {
 
     @ModelAttribute("authorsMap")
     public Map<String, List<Author>> authorsMap() {
-        return authorService.getAuthorsMap();
+        return authorService.getAll();
     }
 
     @GetMapping()

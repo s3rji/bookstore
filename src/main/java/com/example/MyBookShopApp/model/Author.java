@@ -29,11 +29,6 @@ public class Author {
         this.bookList = bookList;
     }
 
-    @Override
-    public String toString() {
-        return firstName + ' ' + lastName;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -56,5 +51,10 @@ public class Author {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return firstName + ' ' + lastName;
     }
 }
