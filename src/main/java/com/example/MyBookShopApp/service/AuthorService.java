@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.service;
 
-import com.example.MyBookShopApp.model.Author;
+import com.example.MyBookShopApp.model.author.Author;
 import com.example.MyBookShopApp.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class AuthorService {
         return repository.findAll()
                 .stream()
                 .collect(Collectors.groupingBy((Author a) -> {
-                    return a.getLastName().substring(0, 1);
+                    return a.getName().substring(0, 1);
                 }));
     }
 }
