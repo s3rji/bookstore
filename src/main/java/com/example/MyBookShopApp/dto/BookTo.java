@@ -19,9 +19,11 @@ public class BookTo {
 
     private String description;
 
+    private Integer price;
+
     private Integer priceOld;
 
-    private Integer price;
+    private Short discount;
 
     private Author author;
 
@@ -32,9 +34,10 @@ public class BookTo {
         this.title = book.getTitle();
         this.image = book.getImage();
         this.description = book.getDescription();
-        this.priceOld = book.getPrice();
         this.price = book.getPrice() - (book.getDiscount() * book.getPrice() / 100);
+        this.priceOld = book.getDiscount() > 0 ? book.getPrice() : null;
         this.author = book.getAuthor();
+        this.discount = book.getDiscount();
     }
 
     public Integer getId() {
@@ -107,5 +110,13 @@ public class BookTo {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public Short getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Short discount) {
+        this.discount = discount;
     }
 }
