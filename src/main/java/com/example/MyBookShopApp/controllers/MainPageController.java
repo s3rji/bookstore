@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.controllers;
 
+import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.model.book.Book;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class MainPageController {
     }
 
     @ModelAttribute("listBooks")
-    public List<Book> recommendedBooks() {
+    public List<BookTo> recommendedBooks() {
         return bookService.getAll();
     }
 

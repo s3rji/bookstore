@@ -1,5 +1,8 @@
 package com.example.MyBookShopApp.model.book;
 
+import com.example.MyBookShopApp.model.author.Author;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -35,6 +38,11 @@ public class Book {
     @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
     private Short discount;
 
+    @ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Author author;
+
     public Integer getId() {
         return id;
     }
@@ -51,7 +59,7 @@ public class Book {
         this.pubDate = pubDate;
     }
 
-    public Short getIsBestseller() {
+    public Short isBestseller() {
         return isBestseller;
     }
 
@@ -105,5 +113,17 @@ public class Book {
 
     public void setDiscount(Short discount) {
         this.discount = discount;
+    }
+
+    public Short getIsBestseller() {
+        return isBestseller;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }

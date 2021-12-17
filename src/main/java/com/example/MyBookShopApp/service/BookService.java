@@ -1,7 +1,8 @@
 package com.example.MyBookShopApp.service;
 
-import com.example.MyBookShopApp.model.book.Book;
+import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.repository.BookRepository;
+import com.example.MyBookShopApp.util.BookUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class BookService {
         this.repository = repository;
     }
 
-    public List<Book> getAll() {
-        return repository.findAll();
+    public List<BookTo> getAll() {
+        return BookUtil.getTos(repository.findAll());
     }
 }
