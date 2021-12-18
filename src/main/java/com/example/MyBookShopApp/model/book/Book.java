@@ -43,6 +43,15 @@ public class Book {
     @JsonIgnore
     private Author author;
 
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
+    private Integer totalBought;
+
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
+    private Integer totalCart;
+
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
+    private Integer totalPostponed;
+
     public Integer getId() {
         return id;
     }
@@ -125,5 +134,29 @@ public class Book {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public Integer getTotalBought() {
+        return totalBought;
+    }
+
+    public void setTotalBought(Integer totalBought) {
+        this.totalBought = totalBought;
+    }
+
+    public Integer getTotalCart() {
+        return totalCart;
+    }
+
+    public void setTotalCart(Integer totalCart) {
+        this.totalCart = totalCart;
+    }
+
+    public Integer getTotalPostponed() {
+        return totalPostponed;
+    }
+
+    public void setTotalPostponed(Integer totalPostponed) {
+        this.totalPostponed = totalPostponed;
     }
 }
