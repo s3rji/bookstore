@@ -26,7 +26,7 @@ public class MainPageController {
 
     @ModelAttribute("recentBooks")
     public List<BookTo> recentBooks() {
-        return bookService.getPageOfRecent(0, 6);
+        return bookService.getPageOfRecent(0, 6, null, null);
     }
 
     @ModelAttribute("popularBooks")

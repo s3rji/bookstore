@@ -4,7 +4,7 @@
     <div class="Card" th:each="book : ${books}">
         <div class="Card-picture">
             <a href="#" th:href="${book.id}">
-                <img src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
+                <img th:src="${book.image}" src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
             </a>
         </div>
         <div class="Card-content">
@@ -20,7 +20,7 @@
     </div>
     <div class="Cards-footer Cards-footer_center">
         <a class="btn btn_primary" href="#" th:attr="data-refreshshow = ${category}" data-refreshshow="recent"
-           data-refreshoffset="20" data-refreshlimit="20" th:text="#{books.pool.show.more}">Показать еще</a>
+           data-refreshoffset="1" data-refreshlimit="20" th:text="#{books.pool.show.more}">Показать еще</a>
     </div>
 </div>
 </html>

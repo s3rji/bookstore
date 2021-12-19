@@ -31,13 +31,9 @@ public class BookService {
         return BookUtil.getTos(repository.findAll(nextPage).getContent());
     }
 
-    public List<BookTo> getPageOfRecent(Integer offset, Integer limit) {
+    public List<BookTo> getPageOfRecent(Integer offset, Integer limit, LocalDate from, LocalDate to) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
-        return BookUtil.getTos(repository.findByPubDateBetween(
-                LocalDate.of(2021, 7, 1),
-                LocalDate.now(),
-                nextPage
-        ).getContent());
+        return BookUtil.getTos(repository.findByPubDateBetween(from, to, nextPage).getContent());
     }
 
     public List<BookTo> getPageOfPopular(Integer offset, Integer limit) {

@@ -33,7 +33,7 @@
                             <label class="form-label" th:text="#{recent.date.from}">с
                             </label>
                             <input class="form-input form-input_date form-input_date_uninit" id="fromdaterecent"
-                                   name="fromdaterecent" type="text" placeholder="Дата" data-refreshoffset="20"
+                                   name="fromdaterecent" type="text" placeholder="Дата" data-refreshoffset="0"
                                    data-refreshlimit="20" data-refreshshow="changedate" data-refreshfrom="0"
                                    autocomplete="off"/>
                         </div>
@@ -41,14 +41,14 @@
                             <label class="form-label" th:text="#{recent.date.to}">по
                             </label>
                             <input class="form-input form-input_date form-input_date_uninit" id="enddaterecent"
-                                   name="enddaterecent" type="text" placeholder="Дата" data-refreshoffset="20"
+                                   name="enddaterecent" type="text" placeholder="Дата" data-refreshoffset="0"
                                    data-refreshlimit="20" data-refreshshow="changedate" data-refreshto="0"
                                    autocomplete="off"/>
                         </div>
                     </form>
                 </div>
                 <div class="Cards Cards_refresh"
-                     th:replace="~{fragments/books_pool_fragment :: pool(category='recent')}"></div>
+                     th:replace="~{fragments/books_pool_fragment :: pool(category='recent', books=${recentBooks})}"></div>
             </div>
         </main>
     </div>

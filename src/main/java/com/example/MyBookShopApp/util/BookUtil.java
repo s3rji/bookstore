@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
-public class BookUtil {
+public final class BookUtil {
 
     private BookUtil() {
 
