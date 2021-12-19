@@ -25,6 +25,11 @@ public class BookController {
         return bookService.getPageOfRecent(0, 20, LocalDate.now().minusMonths(1), LocalDate.now());
     }
 
+    @ModelAttribute("popularBooks")
+    public List<BookTo> getPopular() {
+        return bookService.getPageOfPopular(0, 20);
+    }
+
     @GetMapping("/recent")
     public String getRecentPage() {
         return "/books/recent";

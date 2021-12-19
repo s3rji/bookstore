@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
+import static com.example.MyBookShopApp.util.DateUtil.atFromDateOrMin;
+import static com.example.MyBookShopApp.util.DateUtil.atToDateOrMax;
+
 @Controller
 public class MainPageController {
 
@@ -26,7 +29,7 @@ public class MainPageController {
 
     @ModelAttribute("recentBooks")
     public List<BookTo> recentBooks() {
-        return bookService.getPageOfRecent(0, 6, null, null);
+        return bookService.getPageOfRecent(0, 6, atFromDateOrMin(null), atToDateOrMax(null));
     }
 
     @ModelAttribute("popularBooks")

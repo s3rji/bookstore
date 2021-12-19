@@ -37,7 +37,8 @@ public class BookService {
     }
 
     public List<BookTo> getPageOfPopular(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return BookUtil.getTosPopularSorting(repository.findAll(nextPage).getContent());
+        //Pageable nextPage = PageRequest.of(offset, limit);
+        List<BookTo> books = BookUtil.getTosPopularSorting(repository.findAll());
+        return books.subList(offset * limit, offset * limit + limit);
     }
 }
