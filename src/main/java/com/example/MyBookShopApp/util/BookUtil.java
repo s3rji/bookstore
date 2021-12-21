@@ -24,7 +24,7 @@ public final class BookUtil {
                 .toList();
     }
 
-    public static double getRatingPopularity(Book book) {
+    private static double getRatingPopularity(Book book) {
         return book.getTotalBought() + 0.7 * book.getTotalCart() + 0.4 * book.getTotalPostponed();
     }
 }

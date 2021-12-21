@@ -5,10 +5,7 @@ import com.example.MyBookShopApp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
@@ -42,5 +39,12 @@ public class RestBookController {
     @GetMapping("/recommended")
     public BookPageTo getBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
         return new BookPageTo(bookService.getPageOfRecommended(offset, limit));
+    }
+
+    @GetMapping("/tag/{id}")
+    public BookPageTo getBooksByTagPage(@PathVariable("id") Integer id,
+                                        @RequestParam("offset") Integer offset,
+                                        @RequestParam("limit") Integer limit) {
+        return new BookPageTo(bookService.getPageByTag(id, offset, limit));
     }
 }

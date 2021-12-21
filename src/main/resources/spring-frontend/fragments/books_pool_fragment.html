@@ -13,14 +13,14 @@
             <div class="Card-description" th:text="${book.author}">
             </div>
             <div class="Card-cost">
-                <span class="Card-priceOld" th:text="${book.priceOld}"></span>
-                <span class="Card-price" th:text="${book.price}"></span>
+                <span class="Card-priceOld" th:text="'₽' + ${book.priceOld}"></span>
+                <span class="Card-price" th:text="'₽' + ${book.price}"></span>
             </div>
         </div>
     </div>
     <div class="Cards-footer Cards-footer_center">
-        <a class="btn btn_primary" href="#" th:attr="data-refreshshow = ${category}" data-refreshshow="recent"
-           data-refreshoffset="1" data-refreshlimit="20" th:text="#{books.pool.show.more}">Показать еще</a>
+        <a class="btn btn_primary" href="#" th:attr="data-refreshshow = ${category}" th:data-refreshid="${refreshid}" data-refreshshow="recent"
+           data-refreshoffset="1"  data-refreshlimit="20" th:text="#{books.pool.show.more}">Показать еще</a>
     </div>
 </div>
 </html>

@@ -13,4 +13,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT b FROM Book b WHERE b.pubDate >= :from AND b.pubDate <= :to")
     Page<Book> findByPubDateBetween(@Param("from") LocalDate from, @Param("to") LocalDate to, Pageable nextPage);
+
+    @Query("SELECT b FROM Book b JOIN FETCH Book2TagEntity b2t ON b.id=b2t.bookId WHERE b2t.tagId=:tagId")
+    Page<Book> getByTag(@Param("tagId") Integer tagId, Pageable nextPage);
 }

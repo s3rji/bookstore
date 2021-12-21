@@ -41,4 +41,9 @@ public class BookService {
         List<BookTo> books = BookUtil.getTosPopularSorting(repository.findAll());
         return books.subList(offset * limit, offset * limit + limit);
     }
+
+    public List<BookTo> getPageByTag(Integer tagId, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return BookUtil.getTos(repository.getByTag(tagId, nextPage).getContent());
+    }
 }
