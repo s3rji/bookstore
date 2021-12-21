@@ -37,13 +37,12 @@ public class BookService {
     }
 
     public List<BookTo> getPageOfPopular(Integer offset, Integer limit) {
-        //Pageable nextPage = PageRequest.of(offset, limit);
-        List<BookTo> books = BookUtil.getTosPopularSorting(repository.findAll());
-        return books.subList(offset * limit, offset * limit + limit);
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return BookUtil.getTos(repository.findAllByOrderByPopularityDesc(nextPage).getContent());
     }
 
     public List<BookTo> getPageByTag(Integer tagId, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
-        return BookUtil.getTos(repository.getByTag(tagId, nextPage).getContent());
+        return BookUtil.getTos(repository.findByTag(tagId, nextPage).getContent());
     }
 }

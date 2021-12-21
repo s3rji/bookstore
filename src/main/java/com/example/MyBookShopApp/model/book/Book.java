@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.model.book;
 
 import com.example.MyBookShopApp.model.author.Author;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -51,6 +52,9 @@ public class Book {
 
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private Integer totalPostponed;
+
+    @Formula("total_bought + 0.7 * total_cart + 0.4 * total_postponed")
+    private Double popularity;
 
     public Integer getId() {
         return id;
@@ -158,5 +162,13 @@ public class Book {
 
     public void setTotalPostponed(Integer totalPostponed) {
         this.totalPostponed = totalPostponed;
+    }
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
     }
 }

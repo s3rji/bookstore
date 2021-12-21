@@ -15,5 +15,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Page<Book> findByPubDateBetween(@Param("from") LocalDate from, @Param("to") LocalDate to, Pageable nextPage);
 
     @Query("SELECT b FROM Book b JOIN FETCH Book2TagEntity b2t ON b.id=b2t.bookId WHERE b2t.tagId=:tagId")
-    Page<Book> getByTag(@Param("tagId") Integer tagId, Pageable nextPage);
+    Page<Book> findByTag(@Param("tagId") Integer tagId, Pageable nextPage);
+
+    Page<Book> findAllByOrderByPopularityDesc(Pageable nextPage);
 }
