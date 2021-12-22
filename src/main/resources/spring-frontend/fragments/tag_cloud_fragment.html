@@ -2,10 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="Tags" id="tags" th:fragment="cloud">
     <div th:each="tag : ${tags}" class="Tag">
-        <a th:if="${tag.count >= 0 && tag.count < 5}" th:href="@{/tags/index(tagId=${tag.id})}" href="/tags/index.html" th:text="${tag.description}" th:classappend="Tag_xs"></a>
-        <a th:if="${tag.count >= 5 && tag.count < 10}" th:href="@{/tags/index(tagId=${tag.id})}" href="/tags/index.html" th:text="${tag.description}" th:classappend="Tag_sm"></a>
-        <a th:if="${tag.count >= 10 && tag.count < 15}" th:href="@{/tags/index(tagId=${tag.id})}" href="/tags/index.html" th:text="${tag.description}" th:classappend="Tag_md"></a>
-        <a th:if="${tag.count >= 15}" th:href="@{/tags/index(tagId=${tag.id})}" href="/tags/index.html" th:text="${tag.description}" th:classappend="Tag_lg"></a>
+        <a th:href="@{/tags/index(tagId=${tag.id})}" href="/tags/index.html" th:text="${tag.description}" th:classappend="${tag.font()}"></a>
     </div>
 </div>
 </html>
