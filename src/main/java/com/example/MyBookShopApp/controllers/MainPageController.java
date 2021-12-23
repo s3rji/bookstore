@@ -48,6 +48,6 @@ public class MainPageController {
 
     @GetMapping("/")
     public String mainPage() {
-        return "index";
+        return "/index";
     }
 }

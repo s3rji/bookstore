@@ -47,4 +47,11 @@ public class RestBookController {
                                         @RequestParam("limit") Integer limit) {
         return new BookPageTo(bookService.getPageByTag(id, offset, limit));
     }
+
+    @GetMapping("/genre/{id}")
+    public BookPageTo getBooksByGenrePage(@PathVariable("id") Integer id,
+                                        @RequestParam("offset") Integer offset,
+                                        @RequestParam("limit") Integer limit) {
+        return new BookPageTo(bookService.getPageByGenre(id, offset, limit));
+    }
 }

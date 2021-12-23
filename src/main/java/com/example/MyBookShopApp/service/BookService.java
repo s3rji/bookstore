@@ -2,8 +2,8 @@ package com.example.MyBookShopApp.service;
 
 import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.repository.BookRepository;
+import com.example.MyBookShopApp.repository.GenreRepository;
 import com.example.MyBookShopApp.util.BookUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,34 +15,38 @@ import java.util.List;
 @Service
 public class BookService {
 
-    private final BookRepository repository;
+    private final BookRepository bookRepository;
+    private final GenreRepository genreRepository;
 
-    @Autowired
-    public BookService(BookRepository repository) {
-        this.repository = repository;
+    public BookService(BookRepository bookRepository, GenreRepository genreRepository) {
+        this.bookRepository = bookRepository;
+        this.genreRepository = genreRepository;
     }
 
     public List<BookTo> getAll() {
-        return BookUtil.getTos(repository.findAll());
+        return BookUtil.getTos(bookRepository.findAll());
     }
 
     public List<BookTo> getPageOfRecommended(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return BookUtil.getTos(repository.findAll(nextPage).getContent());
+        return BookUtil.getTos(bookRepository.findAll(PageRequest.of(offset, limit)).getContent());
     }
 
     public List<BookTo> getPageOfRecent(Integer offset, Integer limit, LocalDate from, LocalDate to) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
-        return BookUtil.getTos(repository.findByPubDateBetween(from, to, nextPage).getContent());
+        return BookUtil.getTos(bookRepository.findAllByPubDateBetween(from, to, nextPage).getContent());
     }
 
     public List<BookTo> getPageOfPopular(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return BookUtil.getTos(repository.findAllByOrderByPopularityDesc(nextPage).getContent());
+        return BookUtil.getTos(bookRepository.findAllByOrderByPopularityDesc(PageRequest.of(offset, limit)).getContent());
     }
 
     public List<BookTo> getPageByTag(Integer tagId, Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return BookUtil.getTos(repository.findByTag(tagId, nextPage).getContent());
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
+        return BookUtil.getTos(bookRepository.findAllByTag(tagId, nextPage).getContent());
+    }
+
+    public List<BookTo> getPageByGenre(Integer genreId, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
+        return BookUtil.getTos(bookRepository.findAllByGenre(genreId, nextPage).getContent());
     }
 }
