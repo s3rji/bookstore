@@ -49,4 +49,9 @@ public class BookService {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
         return BookUtil.getTos(bookRepository.findAllByGenre(genreId, nextPage).getContent());
     }
+
+    public List<BookTo> getPageByAuthor(Integer authorId, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
+        return BookUtil.getTos(bookRepository.findAllByAuthor(authorId, nextPage).getContent());
+    }
 }

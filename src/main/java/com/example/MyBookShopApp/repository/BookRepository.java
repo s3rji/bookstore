@@ -21,4 +21,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT b FROM Book b JOIN FETCH Book2GenreEntity b2g ON b.id=b2g.bookId WHERE b2g.genreId=:genreId")
     Page<Book> findAllByGenre(@Param("genreId") Integer genreId, Pageable nextPage);
+
+    @Query("SELECT b FROM Book b WHERE b.author.id=:authorId")
+    Page<Book> findAllByAuthor(@Param("authorId") Integer authorId, Pageable nextPage);
 }

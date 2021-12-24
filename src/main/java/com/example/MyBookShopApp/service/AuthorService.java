@@ -26,4 +26,8 @@ public class AuthorService {
                     return a.getName().substring(0, 1);
                 }));
     }
+
+    public Author getBySlug(String slug) {
+        return repository.findBySlug(slug);
+    }
 }

@@ -30,7 +30,7 @@ public class GenreController {
     }
 
     @GetMapping("/{slug}")
-    public String getGenresSlug(@PathVariable("slug") String slug, Model model) {
+    public String getGenreSlug(@PathVariable("slug") String slug, Model model) {
         Genre genre = genreService.getBySlug(slug);
         model.addAttribute("genre", genre);
         model.addAttribute("booksByGenre", bookService.getPageByGenre(genre.getId(), 0, 20));
