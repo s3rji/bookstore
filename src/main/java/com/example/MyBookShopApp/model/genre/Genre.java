@@ -1,9 +1,10 @@
 package com.example.MyBookShopApp.model.genre;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "genre")
@@ -27,7 +28,8 @@ public class Genre {
 
     @OneToMany(mappedBy = "parentId")
     @OrderBy("countBooks DESC")
-    private Set<Genre> childs;
+    @BatchSize(size = 50)
+    private List<Genre> childs;
 
     public Integer getId() {
         return id;
@@ -69,11 +71,11 @@ public class Genre {
         this.countBooks = countBooks;
     }
 
-    public Set<Genre> getChilds() {
+    public List<Genre> getChilds() {
         return childs;
     }
 
-    public void setChilds(Set<Genre> childs) {
+    public void setChilds(List<Genre> childs) {
         this.childs = childs;
     }
 }
