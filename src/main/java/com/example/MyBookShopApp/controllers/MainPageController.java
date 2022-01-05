@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.dto.BookTo;
+import com.example.MyBookShopApp.dto.SearchWordTo;
 import com.example.MyBookShopApp.model.tag.Tag;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.TagService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.MyBookShopApp.util.DateUtil.atFromDateOrMin;
@@ -44,6 +46,16 @@ public class MainPageController {
     @ModelAttribute("tags")
     public List<Tag> allTags() {
         return tagService.getAll();
+    }
+
+    @ModelAttribute("searchWordTo")
+    public SearchWordTo searchWordDto() {
+        return new SearchWordTo();
+    }
+
+    @ModelAttribute("searchResults")
+    public List<BookTo> searchResults() {
+        return new ArrayList<>();
     }
 
     @GetMapping("/")

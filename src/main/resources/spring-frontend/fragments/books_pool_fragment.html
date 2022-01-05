@@ -19,7 +19,8 @@
         </div>
     </div>
     <div class="Cards-footer Cards-footer_center">
-        <a class="btn btn_primary" href="#" th:attr="data-refreshshow = ${category}" th:data-refreshid="${refreshid}" data-refreshshow="recent"
+        <a class="btn btn_primary" href="#" th:attr="data-refreshshow = ${category}, data-refreshquery=${searchWordTo.example}"
+           th:data-refreshid="${refreshid}" data-refreshshow="recent"
            data-refreshoffset="1"  data-refreshlimit="20" th:text="#{books.pool.show.more}">Показать еще</a>
     </div>
 </div>

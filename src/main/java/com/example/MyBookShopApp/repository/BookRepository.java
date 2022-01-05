@@ -1,6 +1,5 @@
 package com.example.MyBookShopApp.repository;
 
-import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.model.book.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,4 +30,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @EntityGraph(attributePaths = "author")
     Book findBySlug(String slug);
+
+    @EntityGraph(attributePaths = "author")
+    Page<Book> findAllByTitleContaining(String title, Pageable nextPage);
 }
