@@ -7,6 +7,10 @@ public class SearchWordTo {
     public SearchWordTo() {
     }
 
+    public SearchWordTo(String example) {
+        this.example = example;
+    }
+
     public void setExample(String example) {
         this.example = example;
     }
