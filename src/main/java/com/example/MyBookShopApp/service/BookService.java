@@ -1,9 +1,11 @@
 package com.example.MyBookShopApp.service;
 
 import com.example.MyBookShopApp.dto.BookTo;
+import com.example.MyBookShopApp.model.book.Book;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.repository.GenreRepository;
 import com.example.MyBookShopApp.util.BookUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,6 +20,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final GenreRepository genreRepository;
 
+    @Autowired
     public BookService(BookRepository bookRepository, GenreRepository genreRepository) {
         this.bookRepository = bookRepository;
         this.genreRepository = genreRepository;
@@ -53,5 +56,9 @@ public class BookService {
     public List<BookTo> getPageByAuthor(Integer authorId, Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit, Sort.by("pubDate").descending());
         return BookUtil.getTos(bookRepository.findAllByAuthor(authorId, nextPage).getContent());
+    }
+
+    public BookTo findBookBySlug(String slug) {
+        return new BookTo(bookRepository.findBySlug(slug));
     }
 }

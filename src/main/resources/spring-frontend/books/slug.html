@@ -23,11 +23,11 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs"
-                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category='Мара и Морок')}"></ul>
+                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category=${slugBook.title})}"></ul>
             <div class="Product">
                 <div class="ProductCard">
                     <div class="ProductCard-look">
-                        <div class="ProductCard-photo"><img src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
+                        <div class="ProductCard-photo"><img src="/assets/img/content/main/card.jpg" alt="card.jpg" th:src="${slugBook.image}"/>
                         </div>
                     </div>
                     <div class="ProductCard-desc" th:replace="~{fragments/book_description_fragment :: bookDesc}"></div>

@@ -13,6 +13,8 @@ public class BookTo {
 
     private Short isBestseller;
 
+    private String slug;
+
     private String title;
 
     private String image;
@@ -27,10 +29,12 @@ public class BookTo {
 
     private Author author;
 
+
     public BookTo(Book book) {
         this.id = book.getId();
         this.pubDate = book.getPubDate();
         this.isBestseller = book.isBestseller();
+        this.slug = book.getSlug();
         this.title = book.getTitle();
         this.image = book.getImage();
         this.description = book.getDescription();
@@ -62,6 +66,14 @@ public class BookTo {
 
     public void setIsBestseller(Short isBestseller) {
         this.isBestseller = isBestseller;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getTitle() {

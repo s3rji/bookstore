@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="ProductCard-desc" th:fragment="bookDesc">
     <div class="ProductCard-header">
-        <h1 class="ProductCard-title">Мара и морок
+        <h1 class="ProductCard-title" th:text="${slugBook.title}">Мара и морок
         </h1>
         <div class="ProductCard-author"><span class="ProductCard-titleProp">Автор:</span>&#32;<a
-                href="#">Лия Арден</a>
+                href="#" th:text="${slugBook.author.name}">Лия Арден</a>
         </div>
         <div class="ProductCard-rating"><span class="ProductCard-titleProp">Рейтинг:</span>
             <button class="trigger trigger_dropdown" type="button">
@@ -324,11 +324,13 @@
         <div class="ProductCard-tags"><span class="ProductCard-titleProp">Тэги:</span><a
                 href="/tags/">Современные</a>,&#32;<a href="/tags/">Психологическая проза</a>
         </div>
-        <div class="ProductCard-cost"><span class="ProductCard-titleProp">Цена:</span><span
-                class="ProductCard-priceOld">₽300</span><span class="ProductCard-price">₽180</span>
+        <div class="ProductCard-cost">
+            <span class="ProductCard-titleProp">Цена:</span>
+            <span class="ProductCard-priceOld" th:text="${slugBook.priceOld}">₽300</span>
+            <span class="ProductCard-price" th:text="${slugBook.price}">₽180</span>
         </div>
     </div>
-    <div class="ProductCard-text">
+    <div class="ProductCard-text" th:text="${slugBook.description}">
         <p>Таких, как я, называют Марами - отмеченными самой богиней смерти Мораной. Когда-то у меня
             и моих шести сестер был свой путь. Тогда люди нас уважали и просили о милосердии. Они
             приносили нам подношения и молились нам. Но 200 лет назад все изменилось, когда принц

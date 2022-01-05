@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.repository;
 
+import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.model.book.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,4 +28,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("SELECT b FROM Book b WHERE b.author.id=:authorId")
     Page<Book> findAllByAuthor(@Param("authorId") Integer authorId, Pageable nextPage);
+
+    Book findBySlug(String slug);
 }
