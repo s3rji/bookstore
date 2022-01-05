@@ -29,5 +29,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("SELECT b FROM Book b WHERE b.author.id=:authorId")
     Page<Book> findAllByAuthor(@Param("authorId") Integer authorId, Pageable nextPage);
 
+    @EntityGraph(attributePaths = "author")
     Book findBySlug(String slug);
 }
