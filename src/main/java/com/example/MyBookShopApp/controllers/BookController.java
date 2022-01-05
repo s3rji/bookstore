@@ -2,13 +2,14 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.dto.SearchWordTo;
 import com.example.MyBookShopApp.service.BookService;
+import com.example.MyBookShopApp.service.ResourceStorage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 @Controller
@@ -16,9 +17,12 @@ import java.time.LocalDate;
 public class BookController {
 
     private final BookService bookService;
+    private final ResourceStorage storage;
 
-    public BookController(BookService bookService) {
+    @Autowired
+    public BookController(BookService bookService, ResourceStorage storage) {
         this.bookService = bookService;
+        this.storage = storage;
     }
 
     @ModelAttribute("searchWordTo")
@@ -40,8 +44,15 @@ public class BookController {
     }
 
     @GetMapping("/{slug}")
-    public String bookPage(@PathVariable("slug") String slug, Model model) {
-        model.addAttribute("slugBook", bookService.findBookBySlug(slug));
+    public String getSlugPage(@PathVariable("slug") String slug, Model model) {
+        model.addAttribute("slugBook", bookService.findBySlug(slug));
         return "/books/slug";
+    }
+
+    @PostMapping("/{slug}/img/save")
+    public String saveNewImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
+        String savePath = storage.saveNewBookImage(file, slug);
+        bookService.saveImage(savePath, slug);
+        return "redirect:/books/" + slug;
     }
 }

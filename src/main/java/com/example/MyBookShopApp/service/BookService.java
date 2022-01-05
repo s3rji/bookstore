@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.service;
 
 import com.example.MyBookShopApp.dto.BookTo;
+import com.example.MyBookShopApp.model.book.Book;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.repository.GenreRepository;
 import com.example.MyBookShopApp.util.BookUtil;
@@ -62,7 +63,13 @@ public class BookService {
         return BookUtil.getTos(bookRepository.findAllByTitleContaining(searchWord, nextPage).getContent());
     }
 
-    public BookTo findBookBySlug(String slug) {
+    public BookTo findBySlug(String slug) {
         return new BookTo(bookRepository.findBySlug(slug));
+    }
+
+    public void saveImage(String savePath, String slug) {
+        Book book = bookRepository.findBySlug(slug);
+        book.setImage(savePath);
+        bookRepository.save(book);
     }
 }
