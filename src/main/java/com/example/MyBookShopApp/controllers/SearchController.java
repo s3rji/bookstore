@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.dto.SearchWordTo;
+import com.example.MyBookShopApp.ex.EmptySearchException;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,10 @@ public class SearchController {
     }
 
     @GetMapping(value = {"/search", "/search/{searchWord}"})
-    public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordTo searchWordTo, Model model) {
+    public String getSearchResult(@PathVariable(value = "searchWord", required = false) SearchWordTo searchWordTo, Model model) throws EmptySearchException {
+        if (searchWordTo == null) {
+            throw new EmptySearchException("Поиск по null невозможен");
+        }
         model.addAttribute("searchWordTo", searchWordTo);
         model.addAttribute("searchResults", bookService.getPageOfSearchResult(searchWordTo.getExample(), 0, 20));
         return "/search/index";

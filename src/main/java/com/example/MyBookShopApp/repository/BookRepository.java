@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
@@ -33,4 +34,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @EntityGraph(attributePaths = "author")
     Page<Book> findAllByTitleContaining(String title, Pageable nextPage);
+
+    @EntityGraph(attributePaths = "author")
+    List<Book> findAllByTitleContaining(String bookTitle);
 }
