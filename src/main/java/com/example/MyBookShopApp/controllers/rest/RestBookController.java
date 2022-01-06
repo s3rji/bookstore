@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -70,5 +71,17 @@ public class RestBookController {
         response.setStatus(HttpStatus.OK);
         response.setData(data);
         return ResponseEntity.ok(response);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ApiResponse<BookTo>> handleMissingServletRequestParameterException(Exception exception) {
+        return new ResponseEntity<>(new ApiResponse<>(HttpStatus.BAD_REQUEST, "Missing required parameters", exception),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BookstoreApiWrongParameterException.class)
+    public ResponseEntity<ApiResponse<BookTo>> handleBookstoreApiWrongParameterException(Exception exception) {
+        return new ResponseEntity<>(new ApiResponse<>(HttpStatus.BAD_REQUEST, "Bad parameter value...", exception),
+                HttpStatus.BAD_REQUEST);
     }
 }

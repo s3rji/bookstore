@@ -13,6 +13,10 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
+    @Override
+    @EntityGraph(attributePaths = "author")
+    Page<Book> findAll(Pageable pageable);
+
     @Query("SELECT b FROM Book b WHERE b.pubDate >= :from AND b.pubDate <= :to")
     @EntityGraph(attributePaths = "author")
     Page<Book> findAllByPubDateBetween(@Param("from") LocalDate from, @Param("to") LocalDate to, Pageable nextPage);
@@ -37,4 +41,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @EntityGraph(attributePaths = "author")
     List<Book> findAllByTitleContaining(String bookTitle);
+
+    @EntityGraph(attributePaths = "author")
+    List<Book> findBySlugIn(String[] cookieSlugs);
 }

@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.model.book;
 import com.example.MyBookShopApp.model.author.Author;
 import com.example.MyBookShopApp.model.book.file.BookFile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
@@ -61,6 +62,7 @@ public class Book {
     private Double popularity;
 
     @OneToMany(mappedBy = "book")
+    @BatchSize(size = 50)
     private List<BookFile> bookFiles = new ArrayList<>();
 
     public Integer getId() {

@@ -1,6 +1,5 @@
 package com.example.MyBookShopApp.service;
 
-import com.example.MyBookShopApp.dto.ApiResponse;
 import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.ex.BookstoreApiWrongParameterException;
 import com.example.MyBookShopApp.model.book.Book;
@@ -11,11 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -92,15 +87,7 @@ public class BookService {
         }
     }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<ApiResponse<BookTo>> handleMissingServletRequestParameterException(Exception exception) {
-        return new ResponseEntity<>(new ApiResponse<>(HttpStatus.BAD_REQUEST, "Missing required parameters", exception),
-                HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(BookstoreApiWrongParameterException.class)
-    public ResponseEntity<ApiResponse<BookTo>> handleBookstoreApiWrongParameterException(Exception exception) {
-        return new ResponseEntity<>(new ApiResponse<>(HttpStatus.BAD_REQUEST, "Bad parameter value...", exception),
-                HttpStatus.BAD_REQUEST);
+    public List<BookTo> findBySlugIn(String[] cookieSlugs) {
+        return BookUtil.getTos(bookRepository.findBySlugIn(cookieSlugs));
     }
 }

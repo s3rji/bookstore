@@ -5,7 +5,7 @@
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link href="favicon.ico" rel="shortcut icon">
+    <link href="/favicon.ico" rel="shortcut icon">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
@@ -24,18 +24,19 @@
         <main class="Middle-main">
             <h1 class="Middle-title" th:text="#{cart.middle.title}">Корзина
             </h1>
+            <h3 th:if="${isCartEmpty}" th:text="#{cart.empty}"></h3>
             <form class="form Cart" action="#" method="post">
-                <div class="Cart-product">
+                <div class="Cart-product" th:each="book : ${booksCart}">
                     <div class="Cart-block Cart-block_row">
-                        <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img"
+                        <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" th:src="${book.image}"
                                                                                                    src="/assets/img/content/main/card.jpg"
                                                                                                    alt="card.jpg"/></a>
                         </div>
                         <div class="Cart-block Cart-block_row">
                             <div class="Cart-block Cart-block_info">
-                                <div class="Cart-author"><a href="#">Борис Васильевич Маяковский</a>
+                                <div class="Cart-author"><a href="#" th:text="${book.author.name}">Борис Васильевич Маяковский</a>
                                 </div>
-                                <div class="Cart-title"><a href="#">Трубы</a>
+                                <div class="Cart-title"><a href="#" th:text="${book.title}">Трубы</a>
                                 </div>
                                 <div class="Cart-rating"><span class="Rating"><span class="Rating-stars"><span
                                         class="Rating-star Rating-star_view">
@@ -90,9 +91,9 @@
                                     </div>
                                     <div class="Cart-btn">
                                         <button class="btn btn_danger btn_outline" data-sendstatus="UNLINK"
-                                                data-bookid="[1133]"><span class="btn-icon"><img
-                                                src="/assets/img/icons/trash.svg" alt="trash.svg"/></span><span
-                                                class="btn-content" th:text="#{cart.button.delete}">Удалить</span>
+                                                th:attr="data-bookid = ${'cart/remove/' + book.slug}">
+                                            <span class="btn-icon"><img src="/assets/img/icons/trash.svg" alt="trash.svg"/></span>
+                                            <span class="btn-content" th:text="#{cart.button.delete}">Удалить</span>
                                         </button>
                                     </div>
                                 </div>
@@ -100,11 +101,11 @@
                             <div class="Cart-block Cart-block_price">
                                 <div class="Cart-priceTitle" th:text="#{cart.item.price}">Цена:
                                 </div>
-                                <div class="Cart-price Cart-price_old">150 р.
+                                <div class="Cart-price Cart-price_old" th:text="${book.priceOld} + 'р.'">150 р.
                                 </div>
-                                <div class="Cart-price">100 р.
+                                <div class="Cart-price" th:text="${book.price} + 'р.'">100 р.
                                 </div>
-                                <div class="Cart-sale">-30%
+                                <div class="Cart-sale" th:text="'-' + ${book.discount} + '%'">-30%
                                 </div>
                             </div>
                         </div>
