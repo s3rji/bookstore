@@ -34,5 +34,14 @@
             </button>
         </div>
     </div>
+    <div id="myPopup">
+        <p>Ссылки для скачивания</p>
+        <div th:each="bookFile : ${slugBook.getBookFiles()}">
+            <a href="#" th:href="${'/books/download/' + bookFile.hash}"
+               th:text="${bookFile.getBookFileExtensionString()}"></a>
+        </div>
+        <span id="myPopup-close" class="close">:x:</span>
+    </div>
+    <div id="myOverlay"></div>
 </div>
 </html>

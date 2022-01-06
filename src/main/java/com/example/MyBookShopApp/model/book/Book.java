@@ -1,11 +1,15 @@
 package com.example.MyBookShopApp.model.book;
 
 import com.example.MyBookShopApp.model.author.Author;
+import com.example.MyBookShopApp.model.book.file.BookFile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -55,6 +59,9 @@ public class Book {
 
     @Formula("total_bought + 0.7 * total_cart + 0.4 * total_postponed")
     private Double popularity;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookFile> bookFiles = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -170,5 +177,13 @@ public class Book {
 
     public void setPopularity(Double popularity) {
         this.popularity = popularity;
+    }
+
+    public List<BookFile> getBookFiles() {
+        return bookFiles;
+    }
+
+    public void setBookFiles(Collection<BookFile> bookFiles) {
+        this.bookFiles = List.copyOf(bookFiles);
     }
 }

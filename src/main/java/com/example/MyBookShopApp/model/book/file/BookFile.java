@@ -1,10 +1,12 @@
 package com.example.MyBookShopApp.model.book.file;
 
+import com.example.MyBookShopApp.model.book.Book;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "book_file")
-public class BookFileEntity {
+public class BookFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +20,14 @@ public class BookFileEntity {
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String path;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private Book book;
+
+    public String getBookFileExtensionString(){
+        return BookFileType.getExtensionStringByTypeID(typeId);
+    }
 
     public Integer getId() {
         return id;

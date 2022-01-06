@@ -2,8 +2,11 @@ package com.example.MyBookShopApp.dto;
 
 import com.example.MyBookShopApp.model.author.Author;
 import com.example.MyBookShopApp.model.book.Book;
+import com.example.MyBookShopApp.model.book.file.BookFile;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 public class BookTo {
 
@@ -29,6 +32,7 @@ public class BookTo {
 
     private Author author;
 
+    private List<BookFile> bookFiles;
 
     public BookTo(Book book) {
         this.id = book.getId();
@@ -42,6 +46,7 @@ public class BookTo {
         this.priceOld = book.getDiscount() > 0 ? book.getPrice() : null;
         this.author = book.getAuthor();
         this.discount = book.getDiscount();
+        this.bookFiles = List.copyOf(book.getBookFiles());
     }
 
     public Integer getId() {
@@ -130,5 +135,13 @@ public class BookTo {
 
     public void setDiscount(Short discount) {
         this.discount = discount;
+    }
+
+    public List<BookFile> getBookFiles() {
+        return bookFiles;
+    }
+
+    public void setBookFiles(Collection<BookFile> bookFiles) {
+        this.bookFiles = List.copyOf(bookFiles);
     }
 }

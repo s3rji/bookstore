@@ -2704,3 +2704,8 @@ insert into book2genre (id, book_id, genre_id) values (997, 14, 44);
 insert into book2genre (id, book_id, genre_id) values (998, 466, 45);
 insert into book2genre (id, book_id, genre_id) values (999, 383, 82);
 insert into book2genre (id, book_id, genre_id) values (1000, 95, 15);
+
+insert into book_file (id, hash, type_id, path, book_id) values (1, 'fsdl342ladads76432', 1, '/Blood.pdf', 1);
+insert into book_file (id, hash, type_id, path, book_id) values (2, 'asdl35436dads34235', 2, '/Blood.epub', 1);
+insert into book_file (id, hash, type_id, path, book_id) values (3, 'qwer342lafdss34123', 3, '/Blood.fb2', 1);
+insert into book_file (id, hash, type_id, path, book_id) values (4, 'hgfd342la543h34123', 1, '/Ulzanas Raid.pdf', 2);
