@@ -90,8 +90,8 @@
                                         </button>
                                     </div>
                                     <div class="Cart-btn">
-                                        <button class="btn btn_danger btn_outline" data-sendstatus="UNLINK"
-                                                th:attr="data-bookid = ${'cart/remove/' + book.slug}">
+                                        <button class="btn btn_danger btn_outline" data-sendstatus="UNLINK_CART"
+                                                th:attr="data-bookid = ${book.slug}">
                                             <span class="btn-icon"><img src="/assets/img/icons/trash.svg" alt="trash.svg"/></span>
                                             <span class="btn-content" th:text="#{cart.button.delete}">Удалить</span>
                                         </button>

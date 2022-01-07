@@ -3,7 +3,7 @@
 <div th:fragment="panel">
     <div class="ProductCard-cart">
         <div class="ProductCard-cartElement">
-            <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]"
+            <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]" th:attr="data-bookid=${slugBook.slug}"
                     data-btntype="check" data-btnradio="buyblock" data-check="false"
                     data-alttext="Отложена"><span class="btn-icon"><img
                     src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span

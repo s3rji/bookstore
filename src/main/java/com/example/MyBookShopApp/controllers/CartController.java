@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 @Controller
-@RequestMapping("/books")
+@RequestMapping("/cart")
 public class CartController {
 
     private final BookService bookService;
@@ -37,7 +37,7 @@ public class CartController {
         return new SearchWordTo();
     }
 
-    @GetMapping("/cart")
+    @GetMapping
     public String getCartPage(@CookieValue(value = "cartContents", required = false) String cartContents, Model model) {
         if (!StringUtils.hasLength(cartContents)) {
             model.addAttribute("isCartEmpty", true);
@@ -52,11 +52,11 @@ public class CartController {
         return "cart";
     }
 
-    @PostMapping("/changeBookStatus/{slug}")
-    public String changeBookStatus(@PathVariable("slug") String slug,
-                                   @CookieValue(name = "cartContents", required = false) String cartContents,
-                                   HttpServletResponse response,
-                                   Model model) {
+    @PostMapping("/{slug}")
+    public String addBookCookie(@PathVariable("slug") String slug,
+                                @CookieValue(name = "cartContents", required = false) String cartContents,
+                                HttpServletResponse response,
+                                Model model) {
 
         Cookie cookie = null;
         if (!StringUtils.hasLength(cartContents)) {
@@ -68,29 +68,29 @@ public class CartController {
         }
 
         if (cookie != null) {
-            cookie.setPath("/books");
+            cookie.setPath("/");
             response.addCookie(cookie);
             model.addAttribute("isCartEmpty", false);
         }
         return "redirect:/books/" + slug;
     }
 
-    @PostMapping("/changeBookStatus/cart/remove/{slug}")
-    public String removeBookFromCartPage(@PathVariable("slug") String slug,
-                                         @CookieValue(name = "cartContents", required = false) String cartContents,
-                                         HttpServletResponse response,
-                                         Model model) {
+    @PostMapping("/remove/{slug}")
+    public String removeBookCookie(@PathVariable("slug") String slug,
+                                   @CookieValue(name = "cartContents", required = false) String cartContents,
+                                   HttpServletResponse response,
+                                   Model model) {
 
         if (StringUtils.hasLength(cartContents)) {
             List<String> cookieBooks = new ArrayList<>(Arrays.asList(cartContents.split("/")));
             cookieBooks.remove(slug);
             Cookie cookie = new Cookie("cartContents", String.join("/", cookieBooks));
-            cookie.setPath("/books");
+            cookie.setPath("/");
             response.addCookie(cookie);
             model.addAttribute("isCartEmpty", false);
         } else {
             model.addAttribute("isCartEmpty", true);
         }
-        return "redirect:/books/cart";
+        return "redirect:/cart";
     }
 }

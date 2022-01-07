@@ -42,6 +42,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @EntityGraph(attributePaths = "author")
     List<Book> findAllByTitleContaining(String bookTitle);
 
-    @EntityGraph(attributePaths = "author")
+    @EntityGraph(attributePaths = {"author", "bookFiles"})
     List<Book> findBySlugIn(String[] cookieSlugs);
 }
