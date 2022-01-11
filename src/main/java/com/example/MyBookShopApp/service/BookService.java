@@ -3,8 +3,9 @@ package com.example.MyBookShopApp.service;
 import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.ex.BookstoreApiWrongParameterException;
 import com.example.MyBookShopApp.model.book.Book;
+import com.example.MyBookShopApp.model.book.BookRating;
+import com.example.MyBookShopApp.repository.BookRatingRepository;
 import com.example.MyBookShopApp.repository.BookRepository;
-import com.example.MyBookShopApp.repository.GenreRepository;
 import com.example.MyBookShopApp.util.BookUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,12 +20,12 @@ import java.util.List;
 public class BookService {
 
     private final BookRepository bookRepository;
-    private final GenreRepository genreRepository;
+    private final BookRatingRepository bookRatingRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository, GenreRepository genreRepository) {
+    public BookService(BookRepository bookRepository, BookRatingRepository bookRatingRepository) {
         this.bookRepository = bookRepository;
-        this.genreRepository = genreRepository;
+        this.bookRatingRepository = bookRatingRepository;
     }
 
     public List<BookTo> getAll() {
@@ -64,7 +65,7 @@ public class BookService {
         return BookUtil.getTos(bookRepository.findAllByTitleContaining(searchWord, nextPage).getContent());
     }
 
-    public BookTo findBySlug(String slug) {
+    public BookTo getBySlug(String slug) {
         return new BookTo(bookRepository.findBySlug(slug));
     }
 
@@ -87,7 +88,30 @@ public class BookService {
         }
     }
 
-    public List<BookTo> findBySlugIn(String[] cookieSlugs) {
+    public List<BookTo> getBySlugIn(String[] cookieSlugs) {
         return BookUtil.getTos(bookRepository.findBySlugIn(cookieSlugs));
+    }
+
+    public List<BookRating> getBookRatingsByBookId(Integer bookId) {
+        return bookRatingRepository.findAllByBookId(bookId);
+    }
+
+    public boolean saveBookRating(Integer bookId, Short value, Integer userId) {
+        if (bookRepository.findById(bookId).orElse(null) == null) {
+            return false;
+        }
+
+        BookRating bookRating = getCurrentUserBookRating(bookId, userId);
+        if (bookRating == null) {
+            bookRatingRepository.save(new BookRating(bookId, userId, value));
+        } else {
+            bookRating.setRating(value);
+            bookRatingRepository.save(bookRating);
+        }
+        return true;
+    }
+
+    public BookRating getCurrentUserBookRating(Integer id, Integer authUserId) {
+        return bookRatingRepository.findByBookIdAndUserId(id, authUserId);
     }
 }

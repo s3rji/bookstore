@@ -1,8 +1,12 @@
 package com.example.MyBookShopApp.controllers;
 
+import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.dto.SearchWordTo;
+import com.example.MyBookShopApp.model.book.BookRating;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.ResourceStorage;
+import com.example.MyBookShopApp.util.BookUtil;
+import com.example.MyBookShopApp.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
@@ -36,6 +41,11 @@ public class BookController {
         return new SearchWordTo();
     }
 
+    @ModelAttribute("currentUserRatingBook")
+    public Short BookRating() {
+        return 0;
+    }
+
     @GetMapping("/recent")
     public String getRecentPage(Model model) {
         model.addAttribute("recentBooks",
@@ -51,7 +61,15 @@ public class BookController {
 
     @GetMapping("/{slug}")
     public String getSlugPage(@PathVariable("slug") String slug, Model model) {
-        model.addAttribute("slugBook", bookService.findBySlug(slug));
+        BookTo slugBook = bookService.getBySlug(slug);
+        List<BookRating> bookRatings = bookService.getBookRatingsByBookId(slugBook.getId());
+        BookRating currentUserRatingBook = bookService.getCurrentUserBookRating(slugBook.getId(), SecurityUtil.authUserId());
+        if (currentUserRatingBook != null) {
+            model.addAttribute("currentUserRatingBook", currentUserRatingBook.getRating());
+        }
+        model.addAttribute("slugBook", slugBook);
+        model.addAttribute("bookRatings", BookUtil.getBookRatingTo(bookRatings));
+
         return "/books/slug";
     }
 

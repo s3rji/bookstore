@@ -46,7 +46,7 @@ public class CartController {
             cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
             cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) : cartContents;
             String[] cookieSlugs = cartContents.split("/");
-            List<BookTo> booksFromCookieSlugs = bookService.findBySlugIn(cookieSlugs);
+            List<BookTo> booksFromCookieSlugs = bookService.getBySlugIn(cookieSlugs);
             model.addAttribute("booksCart", booksFromCookieSlugs);
         }
         return "cart";

@@ -44,7 +44,7 @@ public class PostponeController {
         } else {
             model.addAttribute("isKeptEmpty", false);
             String[] cookieSlugs = keptContents.split("/");
-            List<BookTo> booksFromCookieSlugs = bookService.findBySlugIn(cookieSlugs);
+            List<BookTo> booksFromCookieSlugs = bookService.getBySlugIn(cookieSlugs);
             model.addAttribute("booksKept", booksFromCookieSlugs);
         }
 

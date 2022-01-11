@@ -182,7 +182,7 @@ public class Book {
     }
 
     public List<BookFile> getBookFiles() {
-        return bookFiles;
+        return List.copyOf(bookFiles);
     }
 
     public void setBookFiles(Collection<BookFile> bookFiles) {
