@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.controllers;
 
+import com.example.MyBookShopApp.dto.BookReviewTo;
 import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.dto.SearchWordTo;
 import com.example.MyBookShopApp.model.book.BookRating;
@@ -63,14 +64,16 @@ public class BookController {
     public String getSlugPage(@PathVariable("slug") String slug, Model model) {
         BookTo slugBook = bookService.getBySlug(slug);
         List<BookRating> bookRatings = bookService.getBookRatingsByBookId(slugBook.getId());
+        List<BookReviewTo> bookReviews = bookService.getBookReviewsByBookId(slugBook.getId());
         BookRating currentUserRatingBook = bookService.getCurrentUserBookRating(slugBook.getId(), SecurityUtil.authUserId());
         if (currentUserRatingBook != null) {
             model.addAttribute("currentUserRatingBook", currentUserRatingBook.getRating());
         }
         model.addAttribute("slugBook", slugBook);
-        model.addAttribute("bookRatings", BookUtil.getBookRatingTo(bookRatings));
+        model.addAttribute("bookRatings", BookUtil.getBookRatingTos(bookRatings));
+        model.addAttribute("bookReviews", bookReviews);
 
-        return "/books/slug";
+        return "/books/slugmy";
     }
 
     @PostMapping("/{slug}/img/save")

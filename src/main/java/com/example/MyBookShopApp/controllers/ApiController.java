@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.dto.RateResult;
+import com.example.MyBookShopApp.dto.ApiResult;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +36,25 @@ public class ApiController {
 
     @PostMapping("/rateBook")
     @ResponseBody
-    public RateResult rateBook(@RequestParam("bookId") Integer bookId,
-                               @RequestParam("value") Short value) {
-        return new RateResult(bookService.saveBookRating(bookId, value, SecurityUtil.authUserId()));
+    public ApiResult rateBook(@RequestParam("bookId") Integer bookId,
+                              @RequestParam("value") Short value) {
+        return new ApiResult(bookService.saveBookRating(bookId, value, SecurityUtil.authUserId()));
+    }
+
+    @PostMapping("/bookReview")
+    @ResponseBody
+    public ApiResult bookReview(@RequestParam("bookId") Integer bookId,
+                                @RequestParam("text") String textReview) {
+        if (textReview.trim().length() < 20) {
+            return new ApiResult(false, "Отзыв слишком короткий. Напишите, пожалуйста, более развёрнутый отзыв");
+        }
+        return new ApiResult(bookService.saveBookReview(bookId, textReview, SecurityUtil.authUserId()));
+    }
+
+    @PostMapping("/rateBookReview")
+    @ResponseBody
+    public ApiResult rateBookReview(@RequestParam("reviewId") Integer reviewId,
+                                    @RequestParam("value") Short value) {
+        return new ApiResult(bookService.saveBookReviewLike(reviewId, value, SecurityUtil.authUserId()));
     }
 }

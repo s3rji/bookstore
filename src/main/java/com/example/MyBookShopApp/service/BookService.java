@@ -1,11 +1,13 @@
 package com.example.MyBookShopApp.service;
 
+import com.example.MyBookShopApp.dto.BookReviewTo;
 import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.ex.BookstoreApiWrongParameterException;
 import com.example.MyBookShopApp.model.book.Book;
 import com.example.MyBookShopApp.model.book.BookRating;
-import com.example.MyBookShopApp.repository.BookRatingRepository;
-import com.example.MyBookShopApp.repository.BookRepository;
+import com.example.MyBookShopApp.model.book.review.BookReview;
+import com.example.MyBookShopApp.model.book.review.BookReviewLike;
+import com.example.MyBookShopApp.repository.*;
 import com.example.MyBookShopApp.util.BookUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +23,22 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final BookRatingRepository bookRatingRepository;
+    private final BookReviewRepository bookReviewRepository;
+    private final UserRepository userRepository;
+    private final BookReviewLikeRepository bookReviewLikeRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository, BookRatingRepository bookRatingRepository) {
+    public BookService(BookRepository bookRepository,
+                       BookRatingRepository bookRatingRepository,
+                       BookReviewRepository bookReviewRepository,
+                       UserRepository userRepository,
+                       BookReviewLikeRepository bookReviewLikeRepository) {
+
         this.bookRepository = bookRepository;
         this.bookRatingRepository = bookRatingRepository;
+        this.bookReviewRepository = bookReviewRepository;
+        this.userRepository = userRepository;
+        this.bookReviewLikeRepository = bookReviewLikeRepository;
     }
 
     public List<BookTo> getAll() {
@@ -113,5 +126,38 @@ public class BookService {
 
     public BookRating getCurrentUserBookRating(Integer id, Integer authUserId) {
         return bookRatingRepository.findByBookIdAndUserId(id, authUserId);
+    }
+
+    public List<BookReviewTo> getBookReviewsByBookId(Integer bookId) {
+        return BookUtil.getBookReviewTos(bookReviewRepository.findAllByBookId(bookId));
+    }
+
+    public boolean saveBookReview(Integer bookId, String textReview, Integer userId) {
+        if (bookRepository.findById(bookId).orElse(null) == null) {
+            return false;
+        }
+        BookReview bookReview = new BookReview(bookId, textReview, userRepository.findById(userId).orElse(null));
+        bookReviewRepository.save(bookReview);
+        return true;
+    }
+
+    public boolean saveBookReviewLike(Integer reviewId, Short value, Integer userId) {
+        BookReview bookReview = bookReviewRepository.findById(reviewId).orElse(null);
+        if (bookReview == null) {
+            return false;
+        }
+
+        BookReviewLike bookReviewLike = bookReviewLikeRepository.findByBookReviewAndUserId(bookReview, userId);
+        if (bookReviewLike == null) {
+            bookReviewLikeRepository.save(new BookReviewLike(bookReview, userId, value));
+        } else {
+            if (value == 0) {
+                bookReviewLikeRepository.delete(bookReviewLike);
+            } else {
+                bookReviewLike.setValue(value);
+                bookReviewLikeRepository.save(bookReviewLike);
+            }
+        }
+        return true;
     }
 }
