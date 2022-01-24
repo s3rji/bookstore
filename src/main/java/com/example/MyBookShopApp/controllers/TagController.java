@@ -22,7 +22,7 @@ public class TagController {
     }
 
     @GetMapping("index")
-    public String tagPage(@RequestParam("tagId") Integer tagId, Model model) {
+    public String getTagPage(@RequestParam("tagId") Integer tagId, Model model) {
         model.addAttribute("tag", tagService.getById(tagId));
         model.addAttribute("booksByTag", bookService.getPageByTag(tagId, 0, 20));
         return "/tags/index";

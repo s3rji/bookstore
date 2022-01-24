@@ -84,7 +84,7 @@ public class BookController {
     }
 
     @GetMapping("/download/{hash}")
-    public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash") String hash) throws IOException {
+    public ResponseEntity<ByteArrayResource> getBookFile(@PathVariable("hash") String hash) throws IOException {
         Path path = storage.getBookFilePath(hash);
         Logger.getLogger(this.getClass().getSimpleName()).info("book file path: " + path);
 

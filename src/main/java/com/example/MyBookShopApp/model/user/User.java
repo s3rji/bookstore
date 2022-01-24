@@ -17,11 +17,21 @@ public class User {
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime regTime;
 
-    @Column(columnDefinition = "INT NOT NULL")
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int balance;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
+
+    private String email;
+
+    private String phone;
+
+    private String password;
+
+    public User() {
+        regTime = LocalDateTime.now();
+    }
 
     public int getId() {
         return id;
@@ -61,5 +71,29 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

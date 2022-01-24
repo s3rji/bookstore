@@ -36,15 +36,15 @@ public class ApiController {
 
     @PostMapping("/rateBook")
     @ResponseBody
-    public ApiResult rateBook(@RequestParam("bookId") Integer bookId,
-                              @RequestParam("value") Short value) {
+    public ApiResult saveRateBook(@RequestParam("bookId") Integer bookId,
+                                  @RequestParam("value") Short value) {
         return new ApiResult(bookService.saveBookRating(bookId, value, SecurityUtil.authUserId()));
     }
 
     @PostMapping("/bookReview")
     @ResponseBody
-    public ApiResult bookReview(@RequestParam("bookId") Integer bookId,
-                                @RequestParam("text") String textReview) {
+    public ApiResult saveBookReview(@RequestParam("bookId") Integer bookId,
+                                    @RequestParam("text") String textReview) {
         if (textReview.trim().length() < 20) {
             return new ApiResult(false, "Отзыв слишком короткий. Напишите, пожалуйста, более развёрнутый отзыв");
         }
@@ -53,8 +53,8 @@ public class ApiController {
 
     @PostMapping("/rateBookReview")
     @ResponseBody
-    public ApiResult rateBookReview(@RequestParam("reviewId") Integer reviewId,
-                                    @RequestParam("value") Short value) {
+    public ApiResult saveRateBookReview(@RequestParam("reviewId") Integer reviewId,
+                                        @RequestParam("value") Short value) {
         return new ApiResult(bookService.saveBookReviewLike(reviewId, value, SecurityUtil.authUserId()));
     }
 }

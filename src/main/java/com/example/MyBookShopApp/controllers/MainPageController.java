@@ -53,7 +53,7 @@ public class MainPageController {
     }
 
     @GetMapping("/")
-    public String mainPage() {
+    public String getMainPage() {
         return "/index";
     }
 }
