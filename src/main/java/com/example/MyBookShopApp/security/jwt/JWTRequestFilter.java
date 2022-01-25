@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.security.jwt;
 
 import com.example.MyBookShopApp.security.BookstoreUserDetails;
 import com.example.MyBookShopApp.security.BookstoreUserDetailsService;
+import com.example.MyBookShopApp.security.JwtBlacklistRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -20,10 +21,12 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
     private final BookstoreUserDetailsService bookstoreUserDetailsService;
     private final JWTUtil jwtUtil;
+    private final JwtBlacklistRepository jwtBlacklistRepository;
 
-    public JWTRequestFilter(BookstoreUserDetailsService bookstoreUserDetailsService, JWTUtil jwtUtil) {
+    public JWTRequestFilter(BookstoreUserDetailsService bookstoreUserDetailsService, JWTUtil jwtUtil, JwtBlacklistRepository jwtBlacklistRepository) {
         this.bookstoreUserDetailsService = bookstoreUserDetailsService;
         this.jwtUtil = jwtUtil;
+        this.jwtBlacklistRepository = jwtBlacklistRepository;
     }
 
     @Override
@@ -40,7 +43,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                     username = jwtUtil.extractUsername(token);
                 }
 
-                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null
+                        && jwtBlacklistRepository.findByToken(token) == null) {
                     BookstoreUserDetails userDetails = (BookstoreUserDetails) bookstoreUserDetailsService.loadUserByUsername(username);
                     if (jwtUtil.validateToken(token, userDetails)) {
                         UsernamePasswordAuthenticationToken authenticationToken =

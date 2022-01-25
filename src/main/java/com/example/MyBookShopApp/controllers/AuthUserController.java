@@ -85,21 +85,6 @@ public class AuthUserController {
         return "profile";
     }
 
-//    @GetMapping("/logout")
-//    public String handleLogout(HttpServletRequest request) {
-//        HttpSession session = request.getSession();
-//        SecurityContextHolder.clearContext();
-//        if (session != null) {
-//            session.invalidate();
-//        }
-//
-//        for (Cookie cookie : request.getCookies()) {
-//            cookie.setMaxAge(0);
-//        }
-//
-//        return "redirect:/";
-//    }
-
     @ExceptionHandler(ExpiredJwtException.class)  // токен истек
     public String handleExpiredJwtException(Exception exception) {
         return "/";
