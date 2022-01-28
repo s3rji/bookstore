@@ -4,12 +4,10 @@ import com.example.MyBookShopApp.dto.ApiResult;
 import com.example.MyBookShopApp.dto.SearchWordTo;
 import com.example.MyBookShopApp.ex.ErrorInfo;
 import com.example.MyBookShopApp.ex.IllegalRequestDataException;
-import com.example.MyBookShopApp.security.BookstoreUserRegister;
-import com.example.MyBookShopApp.security.ContactConfirmationPayload;
-import com.example.MyBookShopApp.security.ContactConfirmationResponse;
-import com.example.MyBookShopApp.security.RegistrationForm;
+import com.example.MyBookShopApp.security.*;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 
 @Controller
 public class AuthUserController {

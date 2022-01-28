@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -19,12 +18,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final BookstoreUserDetailsService bookstoreUserDetailsService;
+    private final BookstoreOidcUserService bookstoreOidcUserService;
     private final JWTRequestFilter filter;
     private final BookstoreLogoutHandler logoutHandler;
 
     @Autowired
-    public SecurityConfig(BookstoreUserDetailsService bookstoreUserDetailsService, JWTRequestFilter filter, BookstoreLogoutHandler logoutHandler) {
+    public SecurityConfig(BookstoreUserDetailsService bookstoreUserDetailsService, BookstoreOidcUserService bookstoreOAuth2UserService, JWTRequestFilter filter, BookstoreLogoutHandler logoutHandler) {
         this.bookstoreUserDetailsService = bookstoreUserDetailsService;
+        this.bookstoreOidcUserService = bookstoreOAuth2UserService;
         this.filter = filter;
         this.logoutHandler = logoutHandler;
     }
@@ -52,13 +53,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/my", "/profile").hasRole("USER")
+                .antMatchers("/my", "/profile").authenticated()//.hasRole("USER")
                 .antMatchers("/**").permitAll()
                 .and().formLogin()
                 .loginPage("/signin").failureUrl("/signin")
-                .and().logout().logoutUrl("/logout").addLogoutHandler(logoutHandler).logoutSuccessUrl("/signin").deleteCookies("token");
+                .and().logout().logoutUrl("/logout").addLogoutHandler(logoutHandler).logoutSuccessUrl("/signin").deleteCookies("token")
+                .and().oauth2Login().loginPage("/signin").userInfoEndpoint().oidcUserService(bookstoreOidcUserService)
+                .and().successHandler((request, response, authentication) -> {
+                    BookstoreOidcUser oidcUser = (BookstoreOidcUser) authentication.getPrincipal();
+                    bookstoreUserDetailsService.processOAuthPostLogin(oidcUser);
+                    response.sendRedirect("/my");
+                });
 
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 }

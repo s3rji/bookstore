@@ -71,8 +71,8 @@ public class BookstoreUserRegister {
     }
 
     public Object getCurrentUser() {
-        BookstoreUserDetails userDetails =
-                (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userDetails.getBookstoreUser();
+        BookstoreOidcUser oidcUser =
+                (BookstoreOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return oidcUser.getBookstoreUser();
     }
 }
