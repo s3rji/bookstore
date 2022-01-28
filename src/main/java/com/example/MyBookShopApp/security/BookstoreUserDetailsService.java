@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
@@ -31,11 +30,11 @@ public class BookstoreUserDetailsService implements UserDetailsService {
         }
     }
 
-    public void processOAuthPostLogin(BookstoreOidcUser oidcUser) {
-        if (userRepository.findByEmail(oidcUser.getEmail()) == null) {
+    public void processOAuthPostLogin(BookstoreOAuth2User oAuth2User) {
+        if (userRepository.findByEmail(oAuth2User.getEmail()) == null) {
             User user = new User();
-            user.setName(oidcUser.getFullName());
-            user.setEmail(oidcUser.getEmail());
+            user.setName(oAuth2User.getName());
+            user.setEmail(oAuth2User.getEmail());
             user.setHash(user.getRegTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss")));
             userRepository.save(user);
         }
