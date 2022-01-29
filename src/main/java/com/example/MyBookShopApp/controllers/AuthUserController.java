@@ -84,13 +84,13 @@ public class AuthUserController {
         return "profile";
     }
 
-    @ExceptionHandler(IllegalRequestDataException.class) // пользователь уже существует
+    @ExceptionHandler(IllegalRequestDataException.class)
     public String handleIllegalRequestDataException(Exception exception, RedirectAttributes attributes) {
         attributes.addFlashAttribute("errorInfo", new ErrorInfo(exception.getMessage()));
         return "redirect:/signup";
     }
 
-    @ExceptionHandler(UsernameNotFoundException.class)// пользователь не найдет
+    @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseBody
     public ApiResult handleUsernameNotFoundException(Exception exception) {
         return new ApiResult(false, exception.getMessage());
