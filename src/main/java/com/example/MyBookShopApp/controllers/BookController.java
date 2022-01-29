@@ -4,6 +4,7 @@ import com.example.MyBookShopApp.dto.BookReviewTo;
 import com.example.MyBookShopApp.dto.BookTo;
 import com.example.MyBookShopApp.dto.SearchWordTo;
 import com.example.MyBookShopApp.model.book.BookRating;
+import com.example.MyBookShopApp.security.BookstoreUserRegister;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.ResourceStorage;
 import com.example.MyBookShopApp.util.BookUtil;
@@ -30,11 +31,13 @@ public class BookController {
 
     private final BookService bookService;
     private final ResourceStorage storage;
+    private final BookstoreUserRegister userRegister;
 
     @Autowired
-    public BookController(BookService bookService, ResourceStorage storage) {
+    public BookController(BookService bookService, ResourceStorage storage, BookstoreUserRegister userRegister) {
         this.bookService = bookService;
         this.storage = storage;
+        this.userRegister = userRegister;
     }
 
     @ModelAttribute("searchWordTo")
@@ -73,7 +76,11 @@ public class BookController {
         model.addAttribute("bookRatings", BookUtil.getBookRatingTos(bookRatings));
         model.addAttribute("bookReviews", bookReviews);
 
-        return "/books/slugmy";
+        if (userRegister.getCurrentUser().getName().equals("anonymousUser")) {
+            return "/books/slug";
+        } else {
+            return "/books/slugmy";
+        }
     }
 
     @PostMapping("/{slug}/img/save")

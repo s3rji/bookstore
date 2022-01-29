@@ -33,6 +33,11 @@ public class User {
         regTime = LocalDateTime.now();
     }
 
+    public User(String name) {
+        this();
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

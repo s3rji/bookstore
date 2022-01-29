@@ -1,8 +1,7 @@
 package com.example.MyBookShopApp.security.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -11,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 @Service
 public class JWTUtil {
@@ -39,7 +39,20 @@ public class JWTUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        try {
+            return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            Logger.getLogger(this.getClass().getSimpleName()).warning("Token expired");
+        } catch (UnsupportedJwtException e) {
+            Logger.getLogger(this.getClass().getSimpleName()).warning("Unsupported jwt");
+        } catch (MalformedJwtException e) {
+            Logger.getLogger(this.getClass().getSimpleName()).warning("Malformed jwt");
+        } catch (SignatureException e) {
+            Logger.getLogger(this.getClass().getSimpleName()).warning("Invalid signature");
+        } catch (IllegalArgumentException e) {
+            Logger.getLogger(this.getClass().getSimpleName()).warning("invalid token");
+        }
+        return new DefaultClaims();
     }
 
     public String extractUsername(String token) {

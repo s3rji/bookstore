@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
@@ -71,14 +72,15 @@ public class BookstoreUserRegister {
         return response;
     }
 
-    public Object getCurrentUser() {
+    public User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             BookstoreUserDetails userDetails = (BookstoreUserDetails) principal;
             return userDetails.getBookstoreUser();
-        } else {
+        } else if (principal instanceof OAuth2User) {
             BookstoreOAuth2User oAuth2User = (BookstoreOAuth2User) principal;
             return oAuth2User.getBookstoreUser();
         }
+        return new User("anonymousUser");
     }
 }
