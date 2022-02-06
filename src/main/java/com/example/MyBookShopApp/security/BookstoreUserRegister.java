@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.security;
 
+import com.example.MyBookShopApp.dto.ApiResult;
 import com.example.MyBookShopApp.ex.IllegalRequestDataException;
 import com.example.MyBookShopApp.model.user.User;
 import com.example.MyBookShopApp.repository.UserRepository;
@@ -34,7 +35,7 @@ public class BookstoreUserRegister {
         this.jwtUtil = jwtUtil;
     }
 
-    public void registerNewUser(RegistrationForm registrationForm) {
+    public User registerNewUser(RegistrationForm registrationForm) {
         if (userRepository.findByEmail(registrationForm.getEmail()) == null) {
             User user = new User();
             user.setName(registrationForm.getName());
@@ -43,20 +44,19 @@ public class BookstoreUserRegister {
             user.setPassword(passwordEncoder.encode(registrationForm.getPass()));
             user.setHash(user.getRegTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss")));
             userRepository.save(user);
+            return user;
         } else {
             throw new IllegalRequestDataException("User already exist");
         }
     }
 
-    public ContactConfirmationResponse login(ContactConfirmationPayload payload) {
+    public ApiResult login(ContactConfirmationPayload payload) {
         Authentication authentication =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(),
                         payload.getCode()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        ContactConfirmationResponse response = new ContactConfirmationResponse();
-        response.setResult("true");
-        return response;
+        return new ApiResult(true);
     }
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {

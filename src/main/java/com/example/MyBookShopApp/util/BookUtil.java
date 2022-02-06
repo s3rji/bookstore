@@ -39,7 +39,7 @@ public final class BookUtil {
                 .toList();
     }
 
-    private static double getRatingPopularity(Book book) {
+    static double getRatingPopularity(Book book) {
         return book.getTotalBought() + 0.7 * book.getTotalCart() + 0.4 * book.getTotalPostponed();
     }
 
@@ -59,7 +59,7 @@ public final class BookUtil {
                 .collect(Collectors.toList());
     }
 
-    private static int getBookReviewRating(int totalLike, int totalDislike) {
+    static int getBookReviewRating(int totalLike, int totalDislike) {
         if (totalLike == 0 && totalDislike == 0) return 0;
         return (int) Math.round(3 + 1.00 * (totalLike - totalDislike) / (totalLike + totalDislike) * 2);
     }

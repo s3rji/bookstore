@@ -13,7 +13,7 @@ public class ApiResult {
         this.error = error;
     }
 
-    public boolean isResult() {
+    public boolean getResult() {
         return result;
     }
 
