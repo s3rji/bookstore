@@ -8,10 +8,10 @@ public class UserTestData {
 
     public static RegistrationForm getNewRegistrationForm() {
         RegistrationForm registrationForm = new RegistrationForm();
-        registrationForm.setName("TestUser");
-        registrationForm.setEmail("TestUser@mail.ru");
+        registrationForm.setName("NewTestUser");
+        registrationForm.setEmail("NewTestUser@mail.ru");
         registrationForm.setPhone("89259950011");
-        registrationForm.setPass("password");
+        registrationForm.setPass("newpassword");
         return registrationForm;
     }
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -57,7 +58,7 @@ public class AuthUserController {
     }
 
     @PostMapping("/reg")
-    public String userRegistration(RegistrationForm registrationForm, RedirectAttributes attributes) {
+    public String userRegistration(RegistrationForm registrationForm, RedirectAttributes attributes, HttpServletRequest httpServletRequest) {
         userRegister.registerNewUser(registrationForm);
         attributes.addFlashAttribute("regOk", true);
         return "redirect:/signin";

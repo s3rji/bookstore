@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.security;
 
 import com.example.MyBookShopApp.dto.ApiResult;
+import com.example.MyBookShopApp.ex.IllegalRequestDataException;
 import com.example.MyBookShopApp.model.user.User;
 import com.example.MyBookShopApp.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -16,8 +17,7 @@ import org.springframework.util.StringUtils;
 
 import static com.example.MyBookShopApp.UserTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class BookstoreUserRegisterTests {
@@ -49,7 +49,7 @@ class BookstoreUserRegisterTests {
     }
 
     @Test
-    void registerNewUser() {
+    void registerNewUserTest() {
         User user = userRegister.registerNewUser(getNewRegistrationForm());
         user.setId(USER_ID);
         assertNotNull(user);
@@ -61,7 +61,16 @@ class BookstoreUserRegisterTests {
     }
 
     @Test
-    void login() {
+    void registerNewUserFailTest() {
+        Mockito.doReturn(new User())
+                .when(userRepositoryMock)
+                .findByEmail(getNewRegistrationForm().getEmail());
+
+        assertThrows(IllegalRequestDataException.class, () -> userRegister.registerNewUser(getNewRegistrationForm()));
+    }
+
+    @Test
+    void loginTest() {
         ContactConfirmationPayload payload = new ContactConfirmationPayload();
         payload.setContact("TestUser@mail.ru");
         payload.setCode("password");
@@ -71,7 +80,7 @@ class BookstoreUserRegisterTests {
     }
 
     @Test
-    void jwtLogin() {
+    void jwtLoginTest() {
         Mockito.doReturn(new BookstoreUserDetails(getTestUser()))
                 .when(userDetailsServiceMock)
                 .loadUserByUsername(getTestUser().getEmail());

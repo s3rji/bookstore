@@ -25,16 +25,19 @@ public class BookstoreLogoutHandler implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        Cookie cookieToken = Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals("token"))
-                .findFirst()
-                .orElse(null);
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            Cookie cookieToken = Arrays.stream(cookies)
+                    .filter(cookie -> cookie.getName().equals("token"))
+                    .findFirst()
+                    .orElse(null);
 
-        if (cookieToken != null) {
-            JwtBlacklist jwtBlacklist = new JwtBlacklist();
-            jwtBlacklist.setToken(cookieToken.getValue());
-            jwtBlacklist.setExpiringDate(jwtUtil.extractExpiration(cookieToken.getValue()));
-            jwtBlacklistRepository.save(jwtBlacklist);
+            if (cookieToken != null) {
+                JwtBlacklist jwtBlacklist = new JwtBlacklist();
+                jwtBlacklist.setToken(cookieToken.getValue());
+                jwtBlacklist.setExpiringDate(jwtUtil.extractExpiration(cookieToken.getValue()));
+                jwtBlacklistRepository.save(jwtBlacklist);
+            }
         }
     }
 }
