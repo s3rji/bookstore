@@ -1,9 +1,6 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.dto.ApiBookRate;
-import com.example.MyBookShopApp.dto.ApiBookReview;
-import com.example.MyBookShopApp.dto.ApiBookReviewLike;
-import com.example.MyBookShopApp.dto.ApiResult;
+import com.example.MyBookShopApp.dto.*;
 import com.example.MyBookShopApp.model.user.User;
 import com.example.MyBookShopApp.security.BookstoreUserRegister;
 import com.example.MyBookShopApp.service.BookService;
@@ -26,14 +23,13 @@ public class ApiController {
     }
 
     @PostMapping("/changeBookStatus")
-    public ModelAndView changeBookStatus(@RequestParam("status") String status,
-                                         @RequestParam("slugBook") String slugBook) {
-        return switch (status) {
-            case "UNLINK_CART" -> new ModelAndView("forward:/cart/remove/" + slugBook);
-            case "UNLINK_KEPT" -> new ModelAndView("forward:/postponed/remove/" + slugBook);
-            case "CART" -> new ModelAndView("forward:/cart/" + slugBook);
-            case "KEPT" -> new ModelAndView("forward:/postponed/" + slugBook);
-            default -> new ModelAndView("redirect:/books/" + slugBook);
+    public ModelAndView changeBookStatus(@RequestBody BookStatusTo bookStatus) {
+        return switch (bookStatus.getStatus()) {
+            case "UNLINK_CART" -> new ModelAndView("forward:/cart/remove/" + bookStatus.getBooksIds());
+            case "UNLINK_KEPT" -> new ModelAndView("forward:/postponed/remove/" + bookStatus.getBooksIds());
+            case "CART" -> new ModelAndView("forward:/cart/" + bookStatus.getBooksIds());
+            case "KEPT" -> new ModelAndView("forward:/postponed/" + bookStatus.getBooksIds());
+            default -> new ModelAndView("redirect:/books/" + bookStatus.getBooksIds());
         };
     }
 
